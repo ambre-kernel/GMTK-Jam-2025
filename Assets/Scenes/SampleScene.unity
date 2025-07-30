@@ -456,6 +456,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05f0e4fa716a9674f9cc2130c98e6a5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useMouse: 1
   isLeftStick: 0
   deadZone: 0.75
 --- !u!4 &1039673094
@@ -591,6 +592,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05f0e4fa716a9674f9cc2130c98e6a5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useMouse: 0
   isLeftStick: 1
   deadZone: 0.75
 --- !u!4 &1706573886

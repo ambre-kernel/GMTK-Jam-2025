@@ -2,42 +2,59 @@ using UnityEngine;
 
 public class HulaController : MonoBehaviour
 {
-    [SerializeField] bool useMouse = false;
-    [SerializeField] bool isLeftStick = true;
-    [SerializeField] float deadZone = .5f;
-    [SerializeField] float fallSpeed = 5f;
+    [SerializeField] float deadZone = 0.5f;
+    [SerializeField] float mass = 5f;
     [SerializeField] float groundHeight = 1.5f;
 
-    public Vector2 stickDir = Vector2.zero;
-    private float turnAngle = 0;
-    private float turnLastAngle = 0;
     public float turningSpeed = 0;
     public float targetSpeed = 20f;
+    public Vector2 stickDir = Vector2.zero;
+
+    private GameController controller;
+    private float turnAngle = 0;
+    private float turnLastAngle = 0;
+    private float gravity = 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        controller = FindFirstObjectByType<GameController>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (useMouse)
+        if (controller.useMouse)
         {
             stickDir = Camera.main.ScreenToViewportPoint(Input.mousePosition) * 2 - new Vector3(1, 1, 0);
         }
-        else if (isLeftStick)
+        else
         {
             stickDir.x = Input.GetAxisRaw("Horizontal");
             stickDir.y = Input.GetAxisRaw("Vertical");
         }
+
+        if (Mathf.Abs(turningSpeed) < 1f)
+        {
+            gravity += 9.81f * Time.deltaTime * 0.5f;
+            transform.Translate(new Vector3(0, -gravity * Time.deltaTime, 0));
+            gravity += 9.81f * Time.deltaTime * 0.5f;
+        }
         else
         {
-            stickDir.x = Input.GetAxisRaw("Horizontal2");
-            stickDir.y = Input.GetAxisRaw("Vertical2");
+            transform.Translate(new Vector3(0, (Mathf.Abs(turningSpeed) - targetSpeed) / mass * Time.deltaTime, 0));
+            gravity = mass;
         }
 
-        if (!useMouse && stickDir.magnitude < deadZone)
+        if (transform.position.y <= groundHeight)
+        {
+            transform.position = new Vector3(0, groundHeight, 0);
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if ((!controller.useMouse && stickDir.magnitude < deadZone) || (controller.useMouse && stickDir.magnitude < deadZone/10f))
         {
             stickDir = Vector2.zero;
             turningSpeed = 0;
@@ -46,25 +63,13 @@ public class HulaController : MonoBehaviour
         else
         {
             turnAngle = Mathf.Atan2(-stickDir.y, stickDir.x) * Mathf.Rad2Deg;
+
             turningSpeed = turnLastAngle - turnAngle;
             if (turningSpeed > 180) turningSpeed -= 360;
 
             turnLastAngle = transform.eulerAngles.y;
+
             transform.eulerAngles = new Vector3(0, turnAngle, 0);
-        }
-
-        if (turningSpeed == 0)
-        {
-            transform.Translate(new Vector3(0, -fallSpeed * Time.deltaTime), 0);
-        }
-        else
-        {
-            transform.Translate(new Vector3(0, (Mathf.Abs(turningSpeed) - targetSpeed) / fallSpeed * Time.deltaTime), 0);
-        }
-
-        if (transform.position.y <= groundHeight)
-        {
-            transform.position = new Vector3(0, groundHeight, 0);
         }
     }
 }

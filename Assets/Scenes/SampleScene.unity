@@ -129,7 +129,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: c6f5d0b02bb908a49b6ee7deaa4052d7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.5
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c6f5d0b02bb908a49b6ee7deaa4052d7, type: 3}
       propertyPath: m_LocalPosition.y
@@ -696,13 +696,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 702980323}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05f0e4fa716a9674f9cc2130c98e6a5b, type: 3}
+  m_Script: {fileID: 11500000, guid: 56745d81f889fe24bb1a3e451f707004, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   hula: {fileID: 1219538398}
-  useMouse: 0
-  isLeftStick: 1
-  deadZone: 0.5
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -761,7 +758,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1219538397}
-  - component: {fileID: 1219538396}
   - component: {fileID: 1219538398}
   m_Layer: 0
   m_Name: Hula Container
@@ -770,28 +766,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!95 &1219538396
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1219538395}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c82bd61a9b865f04fad17ee67a4bacc8, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!4 &1219538397
 Transform:
   m_ObjectHideFlags: 0
@@ -820,8 +794,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87b773b41e346a345b88c4332cd29533, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useMouse: 1
+  isLeftStick: 1
+  deadZone: 0.5
   fallSpeed: 5
   groundHeight: 1.5
+  stickDir: {x: 0, y: 0}
   turningSpeed: 0
   targetSpeed: 20
 --- !u!1 &1301826713

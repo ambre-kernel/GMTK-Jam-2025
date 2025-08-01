@@ -5,13 +5,23 @@ using UnityEngine.SceneManagement;
 public class Menu : MonoBehaviour
 {
     [SerializeField] GameObject mainMenu;
+    [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject chapterMenu;
     [SerializeField] GameObject howToMenu;
     [SerializeField] GameObject mainFocus;
+    [SerializeField] GameObject pauseFocus;
     [SerializeField] GameObject chapterFocus;
     [SerializeField] GameObject howToFocus;
+    [SerializeField] GameObject menuBackground;
 
     private EventSystem es;
+    private bool gamePaused = false;
+    private bool gameStarted = false;
+
+    void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
 
     void Start()
     {
@@ -21,12 +31,34 @@ public class Menu : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButtonDown("Cancel")) BackToMain();
+        if (!gameStarted && Input.GetButtonDown("Cancel")) BackToMain();
+        if (gamePaused && Input.GetButtonDown("Cancel")) UnPauseGame();
+        if (gameStarted && !gamePaused && Input.GetButtonDown("Pause")) PauseGame();
     }
 
     public void PlayGame()
     {
-        SceneManager.LoadScene("SampleScene");
+        mainMenu.SetActive(false);
+        menuBackground.SetActive(false);
+        gameStarted = true;
+        SceneManager.LoadScene("SampleScene", LoadSceneMode.Additive);
+    }
+
+    public void PauseGame()
+    {
+        Time.timeScale = 0f;
+        gamePaused = true;
+        pauseMenu.SetActive(true);
+        menuBackground.SetActive(true);
+        es.SetSelectedGameObject(pauseFocus);
+    }
+
+    public void UnPauseGame()
+    {
+        Time.timeScale = 1f;
+        gamePaused = false;
+        pauseMenu.SetActive(false);
+        menuBackground.SetActive(false);
     }
 
     public void Chapters()
@@ -40,6 +72,7 @@ public class Menu : MonoBehaviour
     {
         howToMenu.SetActive(true);
         mainMenu.SetActive(false);
+        pauseMenu.SetActive(false);
         es.SetSelectedGameObject(howToFocus);
     }
 
@@ -47,12 +80,23 @@ public class Menu : MonoBehaviour
     {
         howToMenu.SetActive(false);
         chapterMenu.SetActive(false);
+        pauseMenu.SetActive(false);
         mainMenu.SetActive(true);
         es.SetSelectedGameObject(mainFocus);
     }
 
     public void QuitGame()
     {
-        Application.Quit();
+        if (gameStarted)
+        {
+            SceneManager.UnloadSceneAsync("SampleScene");
+            Time.timeScale = 1f;
+            gameStarted = false;
+            gamePaused = false;
+            pauseMenu.SetActive(false);
+            mainMenu.SetActive(true);
+            es.SetSelectedGameObject(mainFocus);
+        }
+        else Application.Quit();
     }
 }

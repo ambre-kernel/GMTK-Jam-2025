@@ -5,7 +5,6 @@ public class Partition : MonoBehaviour
 {
     [SerializeField] NoteSpawner[] spawners;
     private float interNote = 0;
-    private GameObject closestNote;
 
     public float bpm = 120f;
     public string[] notes;
@@ -24,10 +23,12 @@ public class Partition : MonoBehaviour
     {
         foreach (var note in notes)
         {
-            if (note == "A") spawners[0].Spawn();
-            else if (note == "B") spawners[1].Spawn();
-            else if(note == "X") spawners[2].Spawn();
-            else if(note == "Y") spawners[3].Spawn();
+            var n = note.ToUpper();
+            if (n == "A" || n == "DOWN") spawners[0].Spawn();
+            else if (n == "B" || n == "LEFT") spawners[1].Spawn();
+            else if (n == "X" || n == "RIGHT") spawners[2].Spawn();
+            else if (n == "Y" || n == "UP") spawners[3].Spawn();
+            else if (n == "S" || n == "SPACE") spawners[4].Spawn();
 
             yield return new WaitForSeconds(interNote);
         }

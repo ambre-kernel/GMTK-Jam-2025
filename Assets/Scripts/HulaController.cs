@@ -11,7 +11,7 @@ public class HulaController : MonoBehaviour
     public float targetSpeed = 20f;
     public Vector2 stickDir = Vector2.zero;
 
-    private GameController controller;
+    private Menu controller;
     private float turnAngle = 0;
     private float turnLastAngle = 0;
     private float gravity = 0;
@@ -20,7 +20,7 @@ public class HulaController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        controller = FindFirstObjectByType<GameController>();
+        controller = FindFirstObjectByType<Menu>();
     }
 
     // Update is called once per frame

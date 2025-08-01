@@ -983,12 +983,24 @@ MonoBehaviour:
   - A
   - 
   - Y
-  - B
+  - 
   - A
   - 
   - X
   - 
   - A
+  - 
+  - X
+  - B
+  - X
+  - 
+  - A
+  - Y
+  - 
+  - 
+  - B
+  - 
+  - Y
 --- !u!4 &1272160274
 Transform:
   m_ObjectHideFlags: 0
@@ -1306,7 +1318,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4faae25cf2266643bd74cfe26a79478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useMouse: 0
   limitFPS: 0
   targetFrameRate: 30
 --- !u!4 &1774928227

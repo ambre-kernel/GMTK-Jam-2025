@@ -204,7 +204,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 499602529}
         m_TargetAssemblyTypeName: Menu, Assembly-CSharp
-        m_MethodName: 
+        m_MethodName: UseController
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -660,6 +660,7 @@ MonoBehaviour:
   chapterFocus: {fileID: 522984556}
   howToFocus: {fileID: 908845890}
   menuBackground: {fileID: 2019874083}
+  useMouse: 1
 --- !u!1 &522984556
 GameObject:
   m_ObjectHideFlags: 0
@@ -2082,7 +2083,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 499602529}
         m_TargetAssemblyTypeName: Menu, Assembly-CSharp
-        m_MethodName: 
+        m_MethodName: UseMouse
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

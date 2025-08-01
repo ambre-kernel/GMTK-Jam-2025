@@ -18,6 +18,8 @@ public class Menu : MonoBehaviour
     private bool gamePaused = false;
     private bool gameStarted = false;
 
+    public bool useMouse = true;
+
     void Awake()
     {
         DontDestroyOnLoad(gameObject);
@@ -81,6 +83,22 @@ public class Menu : MonoBehaviour
         howToMenu.SetActive(false);
         chapterMenu.SetActive(false);
         pauseMenu.SetActive(false);
+        mainMenu.SetActive(true);
+        es.SetSelectedGameObject(mainFocus);
+    }
+
+    public void UseMouse()
+    {
+        useMouse = true;
+        howToMenu.SetActive(false);
+        mainMenu.SetActive(true);
+        es.SetSelectedGameObject(mainFocus);
+    }
+
+    public void UseController()
+    {
+        useMouse = false;
+        howToMenu.SetActive(false);
         mainMenu.SetActive(true);
         es.SetSelectedGameObject(mainFocus);
     }

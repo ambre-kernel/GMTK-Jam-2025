@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem.XR;
 using UnityEngine.SceneManagement;
 
 public class Menu : MonoBehaviour
@@ -14,11 +15,10 @@ public class Menu : MonoBehaviour
     [SerializeField] GameObject howToFocus;
     [SerializeField] GameObject menuBackground;
 
+    private GameController controller;
     private EventSystem es;
     private bool gamePaused = false;
     private bool gameStarted = false;
-
-    public bool useMouse = true;
 
     void Awake()
     {
@@ -27,6 +27,7 @@ public class Menu : MonoBehaviour
 
     void Start()
     {
+        controller = FindFirstObjectByType<GameController>();
         es = FindFirstObjectByType<EventSystem>();
         es.SetSelectedGameObject(mainFocus);
     }
@@ -89,7 +90,7 @@ public class Menu : MonoBehaviour
 
     public void UseMouse()
     {
-        useMouse = true;
+        controller.useMouse = true;
         howToMenu.SetActive(false);
         mainMenu.SetActive(true);
         es.SetSelectedGameObject(mainFocus);
@@ -97,7 +98,7 @@ public class Menu : MonoBehaviour
 
     public void UseController()
     {
-        useMouse = false;
+        controller.useMouse = false;
         howToMenu.SetActive(false);
         mainMenu.SetActive(true);
         es.SetSelectedGameObject(mainFocus);

@@ -5,6 +5,7 @@ public class HulaController : MonoBehaviour
     [SerializeField] float deadZone = 0.5f;
     [SerializeField] float mass = 5f;
     [SerializeField] float groundHeight = 1.5f;
+    [SerializeField] float maxHeight = 5f;
 
     public float turningSpeed = 0;
     public float targetSpeed = 20f;
@@ -14,6 +15,7 @@ public class HulaController : MonoBehaviour
     private float turnAngle = 0;
     private float turnLastAngle = 0;
     private float gravity = 0;
+    private bool isFailing = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -34,20 +36,30 @@ public class HulaController : MonoBehaviour
             stickDir.y = Input.GetAxisRaw("Vertical");
         }
 
-        if (Mathf.Abs(turningSpeed) < 1f)
+        if (!isFailing && transform.position.y > maxHeight)
         {
-            gravity += 9.81f * Time.deltaTime * 0.5f;
-            transform.Translate(new Vector3(0, -gravity * Time.deltaTime, 0));
-            gravity += 9.81f * Time.deltaTime * 0.5f;
+            isFailing = true;
         }
         else
         {
-            transform.Translate(new Vector3(0, (Mathf.Abs(turningSpeed) - targetSpeed) / mass * Time.deltaTime, 0));
-            gravity = mass;
+            if (Mathf.Abs(turningSpeed) < 1f || isFailing)
+            {
+                gravity += 9.81f * Time.deltaTime * 0.5f;
+                transform.Translate(new Vector3(0, -gravity * Time.deltaTime, 0));
+                gravity += 9.81f * Time.deltaTime * 0.5f;
+            }
+            else
+            {
+                float lift = (Mathf.Abs(turningSpeed) - targetSpeed) / mass * Time.deltaTime;
+                transform.Translate(new Vector3(0, lift, 0));
+                gravity = mass;
+            }
         }
+
 
         if (transform.position.y <= groundHeight)
         {
+            isFailing = false;
             transform.position = new Vector3(0, groundHeight, 0);
         }
     }

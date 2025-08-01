@@ -853,6 +853,7 @@ MonoBehaviour:
   deadZone: 0.5
   mass: 5
   groundHeight: 1.5
+  maxHeight: 5
   turningSpeed: 0
   targetSpeed: 20
   stickDir: {x: 0, y: 0}

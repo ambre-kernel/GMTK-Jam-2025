@@ -29,7 +29,7 @@ public class Menu : MonoBehaviour
     {
         controller = FindFirstObjectByType<GameController>();
         es = FindFirstObjectByType<EventSystem>();
-        es.SetSelectedGameObject(mainFocus);
+        if (!controller.useMouse) es.SetSelectedGameObject(mainFocus);
     }
 
     void Update()
@@ -53,7 +53,7 @@ public class Menu : MonoBehaviour
         gamePaused = true;
         pauseMenu.SetActive(true);
         menuBackground.SetActive(true);
-        es.SetSelectedGameObject(pauseFocus);
+        if (!controller.useMouse) es.SetSelectedGameObject(pauseFocus);
     }
 
     public void UnPauseGame()
@@ -68,7 +68,7 @@ public class Menu : MonoBehaviour
     {
         chapterMenu.SetActive(true);
         mainMenu.SetActive(false);
-        es.SetSelectedGameObject(chapterFocus);
+        if (!controller.useMouse) es.SetSelectedGameObject(chapterFocus);
     }
 
     public void HowToPlay()
@@ -76,7 +76,7 @@ public class Menu : MonoBehaviour
         howToMenu.SetActive(true);
         mainMenu.SetActive(false);
         pauseMenu.SetActive(false);
-        es.SetSelectedGameObject(howToFocus);
+        if (!controller.useMouse) es.SetSelectedGameObject(howToFocus);
     }
 
     public void BackToMain()
@@ -85,7 +85,7 @@ public class Menu : MonoBehaviour
         chapterMenu.SetActive(false);
         pauseMenu.SetActive(false);
         mainMenu.SetActive(true);
-        es.SetSelectedGameObject(mainFocus);
+        if (!controller.useMouse) es.SetSelectedGameObject(mainFocus);
     }
 
     public void UseMouse()
@@ -93,7 +93,7 @@ public class Menu : MonoBehaviour
         controller.useMouse = true;
         howToMenu.SetActive(false);
         mainMenu.SetActive(true);
-        es.SetSelectedGameObject(mainFocus);
+        if (!controller.useMouse) es.SetSelectedGameObject(mainFocus);
     }
 
     public void UseController()
@@ -101,7 +101,7 @@ public class Menu : MonoBehaviour
         controller.useMouse = false;
         howToMenu.SetActive(false);
         mainMenu.SetActive(true);
-        es.SetSelectedGameObject(mainFocus);
+        if (!controller.useMouse) es.SetSelectedGameObject(mainFocus);
     }
 
     public void QuitGame()
@@ -114,8 +114,15 @@ public class Menu : MonoBehaviour
             gamePaused = false;
             pauseMenu.SetActive(false);
             mainMenu.SetActive(true);
-            es.SetSelectedGameObject(mainFocus);
+            if (!controller.useMouse) es.SetSelectedGameObject(mainFocus);
         }
         else Application.Quit();
+    }
+
+    public void RestratGame()
+    {
+        UnPauseGame();
+        QuitGame();
+        PlayGame();
     }
 }
